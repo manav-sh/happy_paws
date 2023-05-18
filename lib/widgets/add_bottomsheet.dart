@@ -32,7 +32,7 @@ Future addBottomSheet() {
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
               child: Text(
-                'Add a New Plant',
+                'Add a new dog',
                 // style: bottomSheet,
               ),
             ),
@@ -42,7 +42,7 @@ Future addBottomSheet() {
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
               child: Text(
-                'Add a New Plant',
+                'Request for NGO help',
                 // style: bottomSheet,
               ),
             ),

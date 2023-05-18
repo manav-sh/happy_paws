@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:happy_paws/controller/firebase_auth.dart';
 import 'package:happy_paws/views/home_screen.dart';
 import 'package:happy_paws/views/login_scren.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -18,7 +21,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/home', page: () => HomeScreen()),
         GetPage(name: '/login', page: () => const LoginScreen()),
       ],
-      title: 'Flutter Demo',
+      title: 'Happy Paws',
       theme: ThemeData(
         primarySwatch: const MaterialColor(0xFFEC3B3B, <int, Color>{
           50: Color(0x2FD0775B),
@@ -33,7 +36,7 @@ class MyApp extends StatelessWidget {
           900: Color(0xFFEC3B3B),
         }),
       ),
-      home: const LoginScreen(),
+      home: FBAuth.handleAuthState(),
     );
   }
 }

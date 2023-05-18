@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "630919276946",
+    "project_id": "happyy-paws",
+    "storage_bucket": "happyy-paws.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:630919276946:android:768fd263d305b8b325f94b",
+        "android_client_info": {
+          "package_name": "com.happypaws.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "630919276946-9lb4t14j71avq9ukfni6ntabtvcrko45.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-6OkdEAju4CI2EQp_44ROqoELlIVYp64"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "630919276946-9lb4t14j71avq9ukfni6ntabtvcrko45.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

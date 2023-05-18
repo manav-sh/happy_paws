@@ -1,16 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:happy_paws/constants/colors.dart';
+import 'package:happy_paws/controller/firebase_auth.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
+
+  static void showLoading(BuildContext context) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) => const Center(
+        child:
+            SizedBox(height: 35, width: 35, child: CircularProgressIndicator()),
+      ),
+    );
+  }
+
+  static void hideLoading(BuildContext context) {
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
       body: Container(
-        constraints: BoxConstraints.expand(),
+        constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('assets/images/bg_login.png'),
@@ -20,8 +36,17 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             InkWell(
-              onTap: () {
-                Get.offNamed('/home');
+              onTap: () async {
+                showLoading(context);
+                await FBAuth.loginWithGoogle().then((value) {
+                  if (value == null) {
+                    Get.snackbar('Error', 'Login Cancelled. Try again');
+                  } else {
+                    Get.snackbar(
+                        'Success', 'Welcome ${value.user?.displayName}');
+                  }
+                });
+                Navigator.of(context).pop();
               },
               child: Container(
                 padding:
