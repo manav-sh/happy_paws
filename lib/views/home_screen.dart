@@ -7,6 +7,7 @@ import 'package:happy_paws/constants/colors.dart';
 import 'package:happy_paws/controller/location_permission_controller.dart';
 import 'package:happy_paws/controller/navbar_controller.dart';
 import 'package:happy_paws/views/home.dart';
+import 'package:happy_paws/views/profile_screen.dart';
 import 'package:happy_paws/widgets/add_bottomsheet.dart';
 import 'package:happy_paws/widgets/home_widgets.dart';
 
@@ -65,13 +66,13 @@ class _HomeScreenState extends State<HomeScreen> {
           size: 25,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Obx(() => BottomAppBar(
             shape: const CircularNotchedRectangle(),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   InkWell(
                     onTap: () => navbarController.changeIndex(0),
@@ -85,20 +86,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             ? primaryRedBg
                             : Colors.transparent),
                   ),
+                  // InkWell(
+                  //   onTap: () => navbarController.changeIndex(1),
+                  //   borderRadius: BorderRadius.circular(16),
+                  //   child: NavBarIcon(
+                  //       icon: 'contributions',
+                  //       color: navbarController.isActive(1)
+                  //           ? primaryRed
+                  //           : const Color(0xff5c5c5c),
+                  //       activeBg: navbarController.isActive(1)
+                  //           ? primaryRedBg
+                  //           : Colors.transparent),
+                  // ),
                   InkWell(
-                    onTap: () => navbarController.changeIndex(1),
-                    borderRadius: BorderRadius.circular(16),
-                    child: NavBarIcon(
-                        icon: 'contributions',
-                        color: navbarController.isActive(1)
-                            ? primaryRed
-                            : const Color(0xff5c5c5c),
-                        activeBg: navbarController.isActive(1)
-                            ? primaryRedBg
-                            : Colors.transparent),
-                  ),
-                  InkWell(
-                    onTap: () => navbarController.changeIndex(2),
+                    onTap: () => Get.to(()=> ProfileScreen()),
                     borderRadius: BorderRadius.circular(16),
                     child: NavBarIcon(
                         icon: 'profile',
@@ -109,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ? primaryRedBg
                             : Colors.transparent),
                   ),
-                  const SizedBox(width: 20),
+                  // const SizedBox(width: 20),
                 ],
               ),
             ),

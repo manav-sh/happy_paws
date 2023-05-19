@@ -1,4 +1,4 @@
-import 'dart:async';
+  import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,6 +41,9 @@ class _HomeState extends State<Home> {
                       getLocation.currentPosition!.value.longitude),
                   zoom: 18.0,
                 ),
+                markers: {
+                  Marker(markerId: const MarkerId("profile"), position: LatLng(getLocation.currentPosition!.value.latitude, getLocation.currentPosition!.value.longitude))
+                },
                 compassEnabled: false,
                 zoomControlsEnabled: false,
               )

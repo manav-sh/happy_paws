@@ -6,6 +6,7 @@ import 'package:happy_paws/views/home_screen.dart';
 import 'package:happy_paws/views/login_scren.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
           900: Color(0xFFEC3B3B),
         }),
       ),
-      home: FBAuth.handleAuthState(),
+      home: HomeScreen(),
     );
   }
 }
