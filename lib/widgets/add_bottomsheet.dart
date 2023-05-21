@@ -61,11 +61,13 @@ Future addBottomSheet() {
                         const SizedBox(
                           height: 15,
                         ),
-                        const TextField(
+                        TextField(
                           decoration: InputDecoration(
                             hintText: 'Dog Description',
                             border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white10),
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide:
+                                  const BorderSide(color: Colors.white10),
                             ),
                           ),
                           maxLines: 5,
@@ -74,11 +76,13 @@ Future addBottomSheet() {
                         const SizedBox(
                           height: 15,
                         ),
-                        const TextField(
+                        TextField(
                           decoration: InputDecoration(
                             hintText: 'Address',
                             border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white10),
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide:
+                                  const BorderSide(color: Colors.white10),
                             ),
                           ),
                           maxLines: 5,

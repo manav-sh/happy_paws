@@ -1,12 +1,13 @@
-  import 'dart:async';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:happy_paws/controller/location_permission_controller.dart';
 
 class Home extends StatefulWidget {
-  Home({super.key});
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();
@@ -17,14 +18,19 @@ class _HomeState extends State<Home> {
 
   final LocationController getLocation = Get.put(LocationController());
 
+  late String _mapStyle;
+
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
+    controller.setMapStyle(_mapStyle);
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    rootBundle.loadString('assets/mapStyle.txt').then((string) {
+      _mapStyle = string;
+    });
     getLocation.updateLocation();
   }
 
@@ -39,13 +45,12 @@ class _HomeState extends State<Home> {
                 initialCameraPosition: CameraPosition(
                   target: LatLng(getLocation.currentPosition!.value.latitude,
                       getLocation.currentPosition!.value.longitude),
-                  zoom: 18.0,
+                  zoom: 18.5,
                 ),
-                markers: {
-                  Marker(markerId: const MarkerId("profile"), position: LatLng(getLocation.currentPosition!.value.latitude, getLocation.currentPosition!.value.longitude))
-                },
+                myLocationEnabled: true,
                 compassEnabled: false,
                 zoomControlsEnabled: false,
+                padding: const EdgeInsets.only(top: 100),
               )
             : const Center(
                 child: CircularProgressIndicator(),
@@ -73,7 +78,7 @@ class _HomeState extends State<Home> {
               )
             ]),
           ),
-        )
+        ),
       ],
     );
   }

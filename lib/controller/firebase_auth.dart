@@ -36,8 +36,8 @@ class FBAuth {
       return await FirebaseAuth.instance
           .signInWithCredential(userCredential)
           .catchError((error) {
-        // ignore: avoid_print, prefer_interpolation_to_compose_strings
-        print('Error occured: ' + error);
+        // ignore: avoid_print
+        print('Error occured: $error');
       });
     }
     return null;

@@ -1,8 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:happy_paws/constants/auth.dart';
 import 'package:happy_paws/constants/colors.dart';
 import 'package:happy_paws/controller/location_permission_controller.dart';
 import 'package:happy_paws/controller/navbar_controller.dart';
@@ -12,17 +10,13 @@ import 'package:happy_paws/widgets/add_bottomsheet.dart';
 import 'package:happy_paws/widgets/home_widgets.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
-
-  static const LatLng _center = LatLng(45.521563, -122.677433);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final Completer<GoogleMapController> _controller = Completer();
-
   final NavbarController navbarController =
       Get.put(NavbarController(), permanent: false);
 
@@ -30,7 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getLocation.locationStatus();
   }
@@ -46,12 +39,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? const Center(child: CircularProgressIndicator())
                   : ((getLocation.isGranted.value == 1)
                       ? const Center(
-                          child: Text('Not granted'),
-                        )
-                      : Home()),
-              const Center(
-                child: Text('NGOs'),
-              ),
+                          child: Text('Location Permission Not granted'),
+                        ).paddingSymmetric(horizontal: 20)
+                      : const Home()),
+              const ProfileScreen(),
               const Center(
                 child: Text('Profile'),
               ),
@@ -99,16 +90,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   //           : Colors.transparent),
                   // ),
                   InkWell(
-                    onTap: () => Get.to(()=> ProfileScreen()),
-                    borderRadius: BorderRadius.circular(16),
-                    child: NavBarIcon(
-                        icon: 'profile',
-                        color: navbarController.isActive(2)
-                            ? primaryRed
-                            : const Color(0xff5c5c5c),
-                        activeBg: navbarController.isActive(2)
-                            ? primaryRedBg
-                            : Colors.transparent),
+                    onTap: () => navbarController.changeIndex(1),
+                    borderRadius: BorderRadius.circular(20),
+                    child: NetWorkImageIcon(
+                        imageUrl: auth.currentUser!.photoURL.toString(),
+                        size: 35,
+                        borderSize: 3,
+                        activeBg: navbarController.isActive(1)
+                            ? primaryRedLight
+                            : primaryRedBg),
                   ),
                   // const SizedBox(width: 20),
                 ],

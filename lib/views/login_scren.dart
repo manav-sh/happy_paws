@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:happy_paws/constants/auth.dart';
 import 'package:happy_paws/constants/colors.dart';
 import 'package:happy_paws/controller/firebase_auth.dart';
 
@@ -37,16 +38,7 @@ class LoginScreen extends StatelessWidget {
           children: [
             InkWell(
               onTap: () async {
-                showLoading(context);
-                await FBAuth.loginWithGoogle().then((value) {
-                  if (value == null) {
-                    Get.snackbar('Error', 'Login Cancelled. Try again');
-                  } else {
-                    Get.snackbar(
-                        'Success', 'Welcome ${value.user?.displayName}');
-                  }
-                });
-                Navigator.of(context).pop();
+                authController.signInWithGoogle();
               },
               child: Container(
                 padding:
