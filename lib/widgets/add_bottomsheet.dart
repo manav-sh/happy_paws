@@ -30,77 +30,7 @@ Future addBottomSheet() {
           InkWell(
             onTap: () {
               Get.back();
-              Get.dialog(
-                Scaffold(
-                  appBar: AppBar(
-                    title: const Text('Add new Area'),
-                    leading: IconButton(
-                      icon: const Icon(
-                        Icons.close,
-                        size: 20,
-                      ),
-                      onPressed: () => Get.back(),
-                    ),
-                  ),
-                  body: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          height: 150,
-                          width: 150,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black12),
-                          ),
-                          child: const Icon(Icons.add),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Dog Description',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  const BorderSide(color: Colors.white10),
-                            ),
-                          ),
-                          maxLines: 5,
-                          keyboardType: TextInputType.multiline,
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Address',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  const BorderSide(color: Colors.white10),
-                            ),
-                          ),
-                          maxLines: 5,
-                          keyboardType: TextInputType.multiline,
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                      ],
-                    ),
-                  ),
-                  bottomNavigationBar: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(100, 45)),
-                    child: const Text('Save'),
-                  ).paddingSymmetric(horizontal: 15, vertical: 10),
-                ),
-              );
+              Get.toNamed('/addDog');
             },
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),

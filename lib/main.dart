@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:happy_paws/constants/auth.dart';
 import 'package:happy_paws/constants/colors.dart';
 import 'package:happy_paws/controller/firebase_auth_getx.dart';
+import 'package:happy_paws/views/add_dog.dart';
 import 'package:happy_paws/views/home_screen.dart';
 import 'package:happy_paws/views/login_scren.dart';
 
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: '/home', page: () => const HomeScreen()),
         GetPage(name: '/login', page: () => const LoginScreen()),
+        GetPage(name: '/addDog', page: () => const AddDog()),
       ],
       title: 'Happy Paws',
       theme: ThemeData(
