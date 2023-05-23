@@ -4,7 +4,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 class LocationController extends GetxController {
   var isGranted = 0.obs;
-  // 0 - no status, 1 - rejected, 2 - approved
+  // 0 - no status ( for loading ), 1 - rejected, 2 - approved
   var isActive = false.obs;
 
   RxBool isDataFetched = false.obs;

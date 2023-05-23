@@ -33,8 +33,7 @@ Future addBottomSheet() {
               Get.dialog(
                 Scaffold(
                   appBar: AppBar(
-                    title: const Text('Add Dog'),
-                    centerTitle: true,
+                    title: const Text('Add new Area'),
                     leading: IconButton(
                       icon: const Icon(
                         Icons.close,
