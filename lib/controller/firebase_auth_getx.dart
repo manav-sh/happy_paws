@@ -64,10 +64,10 @@ class AuthController extends GetxController {
             .signInWithCredential(credential)
             .catchError((onErr) => print(onErr));
       }
-    } catch (e) {
+    } catch (e,t) {
       Get.snackbar("Error", e.toString(), duration: const Duration(seconds: 5));
       // ignore: avoid_print
-      print(e.toString());
+      print(t);
     }
   }
 

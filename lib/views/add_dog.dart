@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:happy_paws/models/dog_model.dart';
+import 'package:happy_paws/service/firebase.dart';
+import 'package:happy_paws/utils/toast.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddDog extends StatefulWidget {
@@ -14,6 +17,7 @@ class AddDog extends StatefulWidget {
 class _AddDogState extends State<AddDog> {
   bool _imageSelected = false;
   File? _photo;
+  DogModel _dogModel = DogModel.fromJson({});
 
   final ImagePicker _picker = ImagePicker();
 
@@ -29,6 +33,8 @@ class _AddDogState extends State<AddDog> {
       }
     });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +83,9 @@ class _AddDogState extends State<AddDog> {
               height: 15,
             ),
             TextField(
+              onSubmitted: (value) {
+                _dogModel.description = value;
+              },
               decoration: InputDecoration(
                 hintText: 'Dog Description',
                 border: OutlineInputBorder(
@@ -91,6 +100,9 @@ class _AddDogState extends State<AddDog> {
               height: 15,
             ),
             TextField(
+              onSubmitted: (value) {
+                _dogModel.address = value;
+              },
               decoration: InputDecoration(
                 hintText: 'Address',
                 border: OutlineInputBorder(
@@ -108,7 +120,16 @@ class _AddDogState extends State<AddDog> {
         ),
       ),
       bottomNavigationBar: ElevatedButton(
-        onPressed: () {},
+        onPressed: () async {
+          if(_dogModel.address.isEmpty){
+            return showToastMsg('Please enter address');
+          }
+          if( _dogModel.description.isEmpty){
+            return showToastMsg('Please enter address');
+          }
+          await firebase.addDog(dog: _dogModel.toJson());
+
+        },
         style: ElevatedButton.styleFrom(fixedSize: const Size(100, 45)),
         child: const Text('Save'),
       ).paddingSymmetric(horizontal: 15, vertical: 10),
