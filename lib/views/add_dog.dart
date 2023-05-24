@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:happy_paws/constants/auth.dart';
+import 'package:happy_paws/constants/db.dart';
+import 'package:happy_paws/controller/location_permission_controller.dart';
 import 'package:happy_paws/models/dog_model.dart';
 import 'package:happy_paws/service/firebase.dart';
 import 'package:happy_paws/utils/toast.dart';
@@ -19,6 +22,8 @@ class _AddDogState extends State<AddDog> {
   File? _photo;
   DogModel _dogModel = DogModel.fromJson({});
 
+  final locationController = Get.put(GetLocation());
+
   final ImagePicker _picker = ImagePicker();
 
   Future getImage() async {
@@ -33,8 +38,6 @@ class _AddDogState extends State<AddDog> {
       }
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +54,20 @@ class _AddDogState extends State<AddDog> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: Column(
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
           children: [
+            const SizedBox(
+              height: 15,
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            TextButton(
+                onPressed: () {
+                  locationController.updateLocation();
+                },
+                child: const Text('Get Current Location')),
             const SizedBox(
               height: 15,
             ),
@@ -121,14 +136,22 @@ class _AddDogState extends State<AddDog> {
       ),
       bottomNavigationBar: ElevatedButton(
         onPressed: () async {
-          if(_dogModel.address.isEmpty){
-            return showToastMsg('Please enter address');
-          }
-          if( _dogModel.description.isEmpty){
-            return showToastMsg('Please enter address');
-          }
-          await firebase.addDog(dog: _dogModel.toJson());
-
+          // if (_dogModel.address.isEmpty) {
+          //   return showToastMsg('Please enter address');
+          // }
+          // if (_dogModel.description.isEmpty) {
+          //   return showToastMsg('Please enter address');
+          // }
+          // await firebase.addDog(dog: _dogModel.toJson());
+          final id = DateTime.now().microsecondsSinceEpoch.toString();
+          await markerOperations.addArea(
+              _photo,
+              id,
+              locationController.currentPosition!.value,
+              auth.currentUser!.displayName.toString(),
+              '24/05/2023',
+              _dogModel.description,
+              _dogModel.address);
         },
         style: ElevatedButton.styleFrom(fixedSize: const Size(100, 45)),
         child: const Text('Save'),

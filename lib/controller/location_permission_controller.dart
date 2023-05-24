@@ -58,3 +58,17 @@ class LocationController extends GetxController {
     isDataFetched.value = true;
   }
 }
+
+class GetLocation extends GetxController {
+  RxBool isDataFetched = false.obs;
+
+  Rx<Position>? currentPosition;
+
+  Future<void> updateLocation() async {
+    isDataFetched.value = false;
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    currentPosition = position.obs;
+    isDataFetched.value = true;
+  }
+}
