@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:happy_paws/constants/colors.dart';
 
 Widget photoLoader(double size) {
@@ -13,4 +14,19 @@ Widget photoLoader(double size) {
       ),
     ),
   );
+}
+
+class ProcessLoaders {
+  static void showLoading() {
+    Get.defaultDialog(
+      backgroundColor: Colors.transparent,
+      content: CircularProgressIndicator(),
+      barrierDismissible: false,
+    );
+  }
+
+  static void hideLoading() {
+    Get.back();
+    Get.offAllNamed('/home');
+  }
 }

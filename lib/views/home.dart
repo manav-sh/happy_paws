@@ -62,9 +62,9 @@ class _HomeState extends State<Home> {
                       onTap: () {
                         Get.bottomSheet(Container(
                           color: Colors.white,
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 30, horizontal: 30),
-                          child: Text('I am bottom sheet'),
+                          child: const Text('I am bottom sheet'),
                         ));
                       })
                 },

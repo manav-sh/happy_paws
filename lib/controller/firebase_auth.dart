@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:happy_paws/views/home_screen.dart';
-import 'package:happy_paws/views/login_scren.dart';
+import 'package:happy_paws/views/intro_screen.dart';
 
 class FBAuth {
   // Check user logged in or not
@@ -10,7 +10,7 @@ class FBAuth {
     return StreamBuilder(
       stream: FirebaseAuth.instance.userChanges(),
       builder: (BuildContext context, snapshot) =>
-          snapshot.hasData ? HomeScreen() : const LoginScreen(),
+          snapshot.hasData ? HomeScreen() : const IntroScreen(),
     );
   }
 

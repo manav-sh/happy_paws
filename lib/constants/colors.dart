@@ -9,3 +9,4 @@ const Color primaryRedLight = Color(0xFFFFE0E0);
 const Color black = Color(0xff2c2c2c);
 const Color lightBlack = Color(0xff414141);
 const Color lightGrey = Color(0xffd4d4d4);
+const Color newRed = Color(0xffE16767);

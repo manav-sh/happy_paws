@@ -5,7 +5,10 @@ import 'package:happy_paws/constants/colors.dart';
 import 'package:happy_paws/controller/firebase_auth_getx.dart';
 import 'package:happy_paws/views/add_dog.dart';
 import 'package:happy_paws/views/home_screen.dart';
-import 'package:happy_paws/views/login_scren.dart';
+import 'package:happy_paws/views/intro_screen.dart';
+import 'package:happy_paws/views/login_screen.dart';
+import 'package:happy_paws/views/more_details_screen.dart';
+import 'package:happy_paws/views/register_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,8 +27,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       getPages: [
         GetPage(name: '/home', page: () => const HomeScreen()),
-        GetPage(name: '/login', page: () => const LoginScreen()),
+        GetPage(name: '/intro', page: () => const IntroScreen()),
         GetPage(name: '/addDog', page: () => const AddDog()),
+        GetPage(name: '/register', page: () => RegisterScreen()),
+        GetPage(name: '/login', page: () => const LoginScreen()),
+        GetPage(name: '/moreInfo', page: () => MoreDetailsScreen()),
       ],
       title: 'Happy Paws',
       theme: ThemeData(

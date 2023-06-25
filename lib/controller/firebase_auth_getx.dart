@@ -29,7 +29,7 @@ class AuthController extends GetxController {
   _setInitialScreen(User? user) {
     if (user == null) {
       // if the user is not found then the user is navigated to the Register Screen
-      Get.offAllNamed('/login');
+      Get.offAllNamed('/intro');
     } else {
       // if the user exists and logged in the the user is navigated to the Home Screen
       Get.offAllNamed('/home');
@@ -37,10 +37,10 @@ class AuthController extends GetxController {
   }
 
   _setInitialScreenGoogle(GoogleSignInAccount? googleSignInAccount) {
-    print(googleSignInAccount);
+    // print(googleSignInAccount);
     if (googleSignInAccount == null) {
       // if the user is not found then the user is navigated to the Register Screen
-      Get.offAllNamed('/login');
+      Get.offAllNamed('/intro');
     } else {
       // if the user exists and logged in the the user is navigated to the Home Screen
       Get.offAllNamed('/home');
@@ -60,11 +60,18 @@ class AuthController extends GetxController {
           idToken: googleSignInAuthentication.idToken,
         );
 
-        await auth
-            .signInWithCredential(credential)
-            .catchError((onErr) => print(onErr));
+        await auth.signInWithCredential(credential).then((user) {
+          if (user.additionalUserInfo?.isNewUser == true) {
+            Get.toNamed('/addinfo');
+          } else {
+            Get.toNamed('/home');
+          }
+        }).catchError((onErr) {
+          Get.snackbar(
+              'Error', 'Some error occured while loggin in. Please try again.');
+        });
       }
-    } catch (e,t) {
+    } catch (e, t) {
       Get.snackbar("Error", e.toString(), duration: const Duration(seconds: 5));
       // ignore: avoid_print
       print(t);
@@ -75,16 +82,44 @@ class AuthController extends GetxController {
     try {
       await auth.createUserWithEmailAndPassword(
           email: email, password: password);
-    } catch (firebaseAuthException) {
-      Get.snackbar('Error', 'Some error occured while logging in');
+    } on FirebaseAuthException catch (firebaseAuthException) {
+      if (firebaseAuthException.code == "email-already-in-use") {
+        Get.snackbar('Error', 'The user is already registered. Try again',
+            snackPosition: SnackPosition.BOTTOM);
+      } else if (firebaseAuthException.code == "invalid-email") {
+        Get.snackbar('Error', 'The email you entered is invalid.');
+      } else {
+        Get.snackbar('Error', 'Some unknown error occured. Please try again.');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Some unknown error occured. Please try again..');
     }
   }
 
   void login(String email, password) async {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
-    } catch (firebaseAuthException) {
-      Get.snackbar('Error', 'Some error occured while logging in');
+    } on FirebaseAuthException catch (firebaseAuthException) {
+      if (firebaseAuthException.code == "invalid-email") {
+        Get.snackbar('Error', 'The user is already registered. Try again',
+            snackPosition: SnackPosition.BOTTOM);
+      } else if (firebaseAuthException.code == "wrong-password") {
+        Get.snackbar('Error', 'The email you entered is invalid.');
+      } else {
+        Get.snackbar('Error', 'Some unknown error occured. Please try again.');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Some unknown error occured. Please try again..');
+    }
+  }
+
+  void addAdditionalInfo(String name, String photoUrl, String number) async {
+    try {
+      await firebaseUser.value?.updateDisplayName(name);
+      await firebaseUser.value?.updatePhotoURL(photoUrl);
+    } catch (e) {
+      Get.snackbar(
+          'Error', 'Some error occured while registering. please try again.');
     }
   }
 

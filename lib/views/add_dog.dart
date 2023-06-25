@@ -1,13 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:happy_paws/constants/auth.dart';
 import 'package:happy_paws/constants/db.dart';
 import 'package:happy_paws/controller/location_permission_controller.dart';
-import 'package:happy_paws/models/dog_model.dart';
-import 'package:happy_paws/service/firebase.dart';
-import 'package:happy_paws/utils/toast.dart';
+import 'package:happy_paws/widgets/loading_builders.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddDog extends StatefulWidget {
@@ -20,7 +19,9 @@ class AddDog extends StatefulWidget {
 class _AddDogState extends State<AddDog> {
   bool _imageSelected = false;
   File? _photo;
-  DogModel _dogModel = DogModel.fromJson({});
+
+  final addressController = TextEditingController();
+  final descriptionController = TextEditingController();
 
   final locationController = Get.put(GetLocation());
 
@@ -90,17 +91,23 @@ class _AddDogState extends State<AddDog> {
                       width: Get.width / 1.2,
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black12),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Icon(Icons.add),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(Icons.add),
+                          SizedBox(height: 10),
+                          Text('Select Image')
+                        ],
+                      ),
                     ),
             ),
             const SizedBox(
               height: 15,
             ),
             TextField(
-              onSubmitted: (value) {
-                _dogModel.description = value;
-              },
+              controller: descriptionController,
               decoration: InputDecoration(
                 hintText: 'Dog Description',
                 border: OutlineInputBorder(
@@ -115,9 +122,7 @@ class _AddDogState extends State<AddDog> {
               height: 15,
             ),
             TextField(
-              onSubmitted: (value) {
-                _dogModel.address = value;
-              },
+              controller: addressController,
               decoration: InputDecoration(
                 hintText: 'Address',
                 border: OutlineInputBorder(
@@ -136,12 +141,22 @@ class _AddDogState extends State<AddDog> {
       ),
       bottomNavigationBar: ElevatedButton(
         onPressed: () async {
-          // if (_dogModel.address.isEmpty) {
-          //   return showToastMsg('Please enter address');
-          // }
-          // if (_dogModel.description.isEmpty) {
-          //   return showToastMsg('Please enter address');
-          // }
+          if (_photo == null) {
+            Fluttertoast.showToast(msg: 'Please select image');
+            return;
+          }
+          if (addressController.text == "") {
+            Fluttertoast.showToast(msg: 'Please enter address');
+            return;
+          }
+          if (descriptionController.text == "") {
+            Fluttertoast.showToast(msg: 'Please enter description');
+            return;
+          }
+          ProcessLoaders.showLoading();
+          print('after loader');
+          await locationController.updateLocation();
+          print('after location fetch');
           // await firebase.addDog(dog: _dogModel.toJson());
           final id = DateTime.now().microsecondsSinceEpoch.toString();
           await markerOperations.addArea(
@@ -150,8 +165,9 @@ class _AddDogState extends State<AddDog> {
               locationController.currentPosition!.value,
               auth.currentUser!.displayName.toString(),
               '24/05/2023',
-              _dogModel.description,
-              _dogModel.address);
+              descriptionController.text,
+              addressController.text);
+          print('after added');
         },
         style: ElevatedButton.styleFrom(fixedSize: const Size(100, 45)),
         child: const Text('Save'),

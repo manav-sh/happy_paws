@@ -17,10 +17,13 @@ TextStyle cardCompleted = TextStyle(
     fontWeight: FontWeight.w600, fontSize: 15, color: Colors.green.shade400);
 
 TextStyle popupHeading =
-    TextStyle(fontWeight: FontWeight.w700, color: black, fontSize: 20);
+    const TextStyle(fontWeight: FontWeight.w700, color: black, fontSize: 20);
 
-TextStyle popupButton = TextStyle(
+TextStyle popupButton = const TextStyle(
     fontWeight: FontWeight.w700,
     color: Colors.white,
     fontSize: 19,
     letterSpacing: 2);
+
+TextStyle loginButton =
+    const TextStyle(fontSize: 19, fontWeight: FontWeight.w500);
