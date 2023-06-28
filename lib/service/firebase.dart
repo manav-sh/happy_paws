@@ -12,8 +12,8 @@ class FirebaseService {
       await dogCollection.add(dog).then((value) async => {
             await dogCollection.doc(value.id).set({'id': value.id})
           });
-    } catch (e, t) {
-      print(t);
+    } catch (e) {
+      // print(t);
     }
   }
 }

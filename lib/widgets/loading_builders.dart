@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:happy_paws/constants/colors.dart';
 
 Widget photoLoader(double size) {
@@ -9,7 +8,7 @@ Widget photoLoader(double size) {
       height: size,
       width: size,
       child: const ColoredBox(
-        color: lightGrey,
+        color: primaryRedLight,
         child: Center(child: Icon(Icons.person)),
       ),
     ),
@@ -17,16 +16,18 @@ Widget photoLoader(double size) {
 }
 
 class ProcessLoaders {
-  static void showLoading() {
-    Get.defaultDialog(
-      backgroundColor: Colors.transparent,
-      content: CircularProgressIndicator(),
+  static void showLoading(BuildContext context) {
+    showDialog(
       barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) => const Center(
+        child:
+            SizedBox(height: 35, width: 35, child: CircularProgressIndicator()),
+      ),
     );
   }
 
-  static void hideLoading() {
-    Get.back();
-    Get.offAllNamed('/home');
+  static void hideLoading(BuildContext context) {
+    Navigator.of(context).pop();
   }
 }

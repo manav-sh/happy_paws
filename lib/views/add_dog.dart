@@ -153,13 +153,17 @@ class _AddDogState extends State<AddDog> {
             Fluttertoast.showToast(msg: 'Please enter description');
             return;
           }
-          ProcessLoaders.showLoading();
+          ProcessLoaders.showLoading(context);
+          // ignore: avoid_print
           print('after loader');
           await locationController.updateLocation();
+          // ignore: avoid_print
           print('after location fetch');
           // await firebase.addDog(dog: _dogModel.toJson());
           final id = DateTime.now().microsecondsSinceEpoch.toString();
+          // ignore: use_build_context_synchronously
           await markerOperations.addArea(
+              context,
               _photo,
               id,
               locationController.currentPosition!.value,

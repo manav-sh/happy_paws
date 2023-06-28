@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:glassmorphism/glassmorphism.dart';
+import 'package:happy_paws/constants/auth.dart';
 import 'package:happy_paws/constants/colors.dart';
 import 'package:happy_paws/constants/styles.dart';
 import 'package:happy_paws/controller/image_controller.dart';
+import 'package:happy_paws/controller/register_form_controller.dart';
+import 'package:happy_paws/service/image_storage.dart';
 import 'package:happy_paws/widgets/form_widgets.dart';
+import 'package:happy_paws/widgets/loading_builders.dart';
 
 class MoreDetailsScreen extends StatelessWidget {
   MoreDetailsScreen({super.key});
 
   final imagepickingController = Get.put(ImagePickingController());
+
+  RegisterFormController controller = Get.put(RegisterFormController());
 
   @override
   Widget build(BuildContext context) {
@@ -106,13 +112,41 @@ class MoreDetailsScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 30),
                               FormInputWithIcon(
-                                  type: TextInputType.phone,
-                                  hintText: 'Phone Number',
-                                  icon: Icons.call),
+                                  code: 3,
+                                  type: TextInputType.text,
+                                  hintText: 'Full Name',
+                                  icon: Icons.person),
                               const SizedBox(height: 10),
                               const SizedBox(height: 20),
                               ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  if (controller.fullname.value == "") {
+                                    Get.snackbar(
+                                        'Warning', 'Please input your name');
+                                    return;
+                                  }
+                                  if (imagepickingController.photo.value ==
+                                      null) {
+                                    Get.snackbar(
+                                        'Warning', 'Please select image');
+                                    return;
+                                  }
+                                  ProcessLoaders.showLoading(context);
+                                  await FirestoreImage.uploadFile(
+                                          imagepickingController.photo.value)
+                                      .then((value) {
+                                    if (value != null) {
+                                      authController.addAdditionalInfo(
+                                          controller.fullname.value, value, "");
+                                      ProcessLoaders.hideLoading(context);
+                                      Get.offAllNamed('/home');
+                                    }
+                                  }).onError((error, stackTrace) {
+                                    Get.snackbar('Error',
+                                        'Error occured while image upload.');
+                                    ProcessLoaders.hideLoading(context);
+                                  });
+                                },
                                 style: ElevatedButton.styleFrom(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 12),
@@ -124,7 +158,7 @@ class MoreDetailsScreen extends StatelessWidget {
                                   children: [
                                     const Spacer(),
                                     Text(
-                                      'Register',
+                                      'Finish',
                                       style: loginButton,
                                     ),
                                     const Spacer()

@@ -3,9 +3,13 @@ import 'package:get/get.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import 'package:happy_paws/constants/colors.dart';
 import 'package:happy_paws/constants/styles.dart';
+import 'package:happy_paws/controller/register_form_controller.dart';
 
 class IntroScreen extends StatelessWidget {
-  const IntroScreen({super.key});
+  IntroScreen({super.key});
+
+  RegisterFormController controller =
+      Get.put(RegisterFormController(), permanent: true);
 
   static void showLoading(BuildContext context) {
     showDialog(

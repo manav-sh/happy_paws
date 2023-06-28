@@ -27,10 +27,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       getPages: [
         GetPage(name: '/home', page: () => const HomeScreen()),
-        GetPage(name: '/intro', page: () => const IntroScreen()),
+        GetPage(name: '/intro', page: () => IntroScreen()),
         GetPage(name: '/addDog', page: () => const AddDog()),
         GetPage(name: '/register', page: () => RegisterScreen()),
-        GetPage(name: '/login', page: () => const LoginScreen()),
+        GetPage(name: '/login', page: () => LoginScreen()),
         GetPage(name: '/moreInfo', page: () => MoreDetailsScreen()),
       ],
       title: 'Happy Paws',

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:glassmorphism/glassmorphism.dart';
+import 'package:happy_paws/constants/auth.dart';
 import 'package:happy_paws/constants/colors.dart';
 import 'package:happy_paws/constants/styles.dart';
+import 'package:happy_paws/controller/register_form_controller.dart';
 import 'package:happy_paws/widgets/form_widgets.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  RegisterFormController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -83,11 +83,13 @@ class RegisterScreen extends StatelessWidget {
                                 height: 30,
                               ),
                               FormInputWithIcon(
+                                  code: 1, //Code 1 refers email input
                                   type: TextInputType.emailAddress,
                                   hintText: 'Email',
                                   icon: Icons.mail_rounded),
                               const SizedBox(height: 10),
                               PasswordInput(
+                                code: 2, //Code 2 refers password input.
                                 type: TextInputType.visiblePassword,
                                 hintText: 'Password',
                                 icon: Icons.key_rounded,
@@ -96,7 +98,15 @@ class RegisterScreen extends StatelessWidget {
                               const SizedBox(height: 20),
                               ElevatedButton(
                                 onPressed: () {
-                                  Get.toNamed('/moreInfo');
+                                  if (controller.email.value != "" ||
+                                      controller.password.value != "") {
+                                    authController.register(
+                                        controller.email.value,
+                                        controller.password.value);
+                                  } else {
+                                    Get.snackbar('Please enter values',
+                                        'Please enter values to continue.');
+                                  }
                                 },
                                 style: ElevatedButton.styleFrom(
                                     padding: const EdgeInsets.symmetric(

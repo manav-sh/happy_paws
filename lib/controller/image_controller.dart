@@ -13,10 +13,12 @@ class ImagePickingController extends GetxController {
 
     if (pickedImage != null) {
       photo.value = File(pickedImage.path);
-      print('HELLLO... Not null');
+      // print('HELLLO... Not null');
       imageSelected.value = true;
     } else {
-      imageSelected.value = false;
+      if (photo.value == null) {
+        imageSelected.value = false;
+      }
     }
   }
 }

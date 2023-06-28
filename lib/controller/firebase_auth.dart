@@ -10,7 +10,7 @@ class FBAuth {
     return StreamBuilder(
       stream: FirebaseAuth.instance.userChanges(),
       builder: (BuildContext context, snapshot) =>
-          snapshot.hasData ? HomeScreen() : const IntroScreen(),
+          snapshot.hasData ? const HomeScreen() : IntroScreen(),
     );
   }
 

@@ -62,7 +62,7 @@ class AuthController extends GetxController {
 
         await auth.signInWithCredential(credential).then((user) {
           if (user.additionalUserInfo?.isNewUser == true) {
-            Get.toNamed('/addinfo');
+            Get.toNamed('/moreInfo');
           } else {
             Get.toNamed('/home');
           }
@@ -80,14 +80,19 @@ class AuthController extends GetxController {
 
   void register(String email, password) async {
     try {
-      await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      await auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) {
+        Get.toNamed('/moreInfo');
+      });
     } on FirebaseAuthException catch (firebaseAuthException) {
       if (firebaseAuthException.code == "email-already-in-use") {
         Get.snackbar('Error', 'The user is already registered. Try again',
             snackPosition: SnackPosition.BOTTOM);
       } else if (firebaseAuthException.code == "invalid-email") {
         Get.snackbar('Error', 'The email you entered is invalid.');
+      } else if (firebaseAuthException.code == "weak-password") {
+        Get.snackbar('Error', 'Please enter a strong password');
       } else {
         Get.snackbar('Error', 'Some unknown error occured. Please try again.');
       }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:happy_paws/constants/auth.dart';
 import 'package:happy_paws/constants/colors.dart';
 import 'package:happy_paws/controller/password_controller.dart';
 
@@ -9,12 +10,14 @@ class FormInputWithIcon extends StatelessWidget {
       required this.hintText,
       required this.icon,
       required this.type,
+      required this.code,
       this.inputAction = TextInputAction.next});
 
   final String hintText;
   final IconData icon;
   TextInputAction inputAction;
   final TextInputType type;
+  final int code;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +28,9 @@ class FormInputWithIcon extends StatelessWidget {
       ),
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
       child: TextField(
+        onChanged: (value) {
+          registerFormController.updateValue(value, code);
+        },
         keyboardType: type,
         textInputAction: inputAction,
         decoration: InputDecoration(
@@ -43,6 +49,7 @@ class FormInputWithIcon extends StatelessWidget {
 class PasswordInput extends StatelessWidget {
   PasswordInput(
       {super.key,
+      required this.code,
       required this.hintText,
       required this.icon,
       required this.type,
@@ -52,6 +59,7 @@ class PasswordInput extends StatelessWidget {
   final IconData icon;
   TextInputAction inputAction;
   final TextInputType type;
+  final int code;
 
   final passwordVisibility = Get.put(PasswordVisibility());
 
@@ -67,6 +75,8 @@ class PasswordInput extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
         child: Obx(
           () => TextField(
+            onChanged: (value) =>
+                registerFormController.updateValue(value, code),
             keyboardType: type,
             textInputAction: inputAction,
             decoration: InputDecoration(

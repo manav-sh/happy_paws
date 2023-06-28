@@ -92,13 +92,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   InkWell(
                     onTap: () => navbarController.changeIndex(1),
                     borderRadius: BorderRadius.circular(20),
-                    child: NetWorkImageIcon(
-                        imageUrl: auth.currentUser!.photoURL.toString(),
-                        size: 35,
-                        borderSize: 3,
-                        activeBg: navbarController.isActive(1)
-                            ? primaryRedLight
-                            : primaryRedBg),
+                    child: (auth.currentUser!.photoURL == null)
+                        ? NavBarIcon(
+                            icon: 'profile',
+                            color: navbarController.isActive(1)
+                                ? primaryRed
+                                : const Color(0xff5c5c5c),
+                            activeBg: navbarController.isActive(1)
+                                ? primaryRedBg
+                                : Colors.transparent)
+                        : NetWorkImageIcon(
+                            imageUrl: auth.currentUser!.photoURL.toString(),
+                            size: 35,
+                            borderSize: 3,
+                            activeBg: navbarController.isActive(1)
+                                ? primaryRedLight
+                                : primaryRedBg),
                   ),
                   // const SizedBox(width: 20),
                 ],

@@ -72,12 +72,17 @@ class ProfileScreen extends StatelessWidget {
             padding:
                 const EdgeInsets.only(top: 15, left: 20, right: 20, bottom: 30),
             child: Row(children: [
-              NetWorkImageIcon(
-                activeBg: Colors.transparent,
-                imageUrl: auth.currentUser!.photoURL.toString(),
-                size: 100,
-                borderSize: 4,
-              ),
+              (auth.currentUser!.photoURL == null)
+                  ? const Icon(
+                      Icons.person,
+                      size: 100,
+                    )
+                  : NetWorkImageIcon(
+                      activeBg: Colors.transparent,
+                      imageUrl: auth.currentUser!.photoURL.toString(),
+                      size: 100,
+                      borderSize: 4,
+                    ),
               const SizedBox(
                 width: 20,
               ),

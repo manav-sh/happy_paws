@@ -13,7 +13,7 @@ class MapPlaces {
       required this.photoUrl});
 
   final String placeId, addedBy, photoUrl, description, addedOn;
-  final FoodStatus foodStatus;
+  final int foodStatus;
   final LatLng latLng;
 
   static MapPlaces fromMapPlaces(Map<String, dynamic> data, String id) {
@@ -21,12 +21,12 @@ class MapPlaces {
     LatLng latLng = LatLng(geoPoint.latitude, geoPoint.longitude);
     return MapPlaces(
       placeId: id,
-      description: data['content'],
-      photoUrl: data['isDone'],
+      description: data['description'],
+      photoUrl: data['photoUrl'],
       addedBy: data['addedBy'],
       addedOn: data['addedOn'],
       latLng: latLng,
-      foodStatus: data['foodStatus'],
+      foodStatus: 1,
     );
   }
 }
