@@ -87,7 +87,8 @@ class MarkerOperations extends GetxController {
           radius: 20,
           fillColor: primaryRedBg,
           strokeWidth: 2,
-          strokeColor: primaryRed500));
+          strokeColor: primaryRed500,
+      ));
     }
     mapsCircles = tempList.toSet().obs;
     mapsCircles.refresh();

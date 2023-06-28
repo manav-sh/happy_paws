@@ -44,25 +44,25 @@ class RegisterScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         verticalDirection: VerticalDirection.up,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 50),
-                            child: Row(
-                              children: const [
-                                Expanded(
-                                    child: Divider(
-                                  color: lightBlack,
-                                )),
-                                Text('  or  '),
-                                Expanded(
-                                    child: Divider(
-                                  color: lightBlack,
-                                ))
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.symmetric(horizontal: 50),
+                          //   child: Row(
+                          //     children: const [
+                          //       Expanded(
+                          //           child: Divider(
+                          //         color: lightBlack,
+                          //       )),
+                          //       Text('  or  '),
+                          //       Expanded(
+                          //           child: Divider(
+                          //         color: lightBlack,
+                          //       ))
+                          //     ],
+                          //   ),
+                          // ),
+                          // const SizedBox(
+                          //   height: 20,
+                          // ),
                           Container(
                             width: Get.width,
                             decoration: BoxDecoration(

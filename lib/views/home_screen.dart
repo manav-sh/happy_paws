@@ -4,6 +4,7 @@ import 'package:happy_paws/constants/auth.dart';
 import 'package:happy_paws/constants/colors.dart';
 import 'package:happy_paws/controller/location_permission_controller.dart';
 import 'package:happy_paws/controller/navbar_controller.dart';
+import 'package:happy_paws/service/marker_operations.dart';
 import 'package:happy_paws/views/home.dart';
 import 'package:happy_paws/views/profile_screen.dart';
 import 'package:happy_paws/widgets/add_bottomsheet.dart';
@@ -21,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Get.put(NavbarController(), permanent: false);
 
   final LocationController getLocation = Get.put(LocationController());
+  final MarkerOperations markerOperations = Get.put(MarkerOperations());
 
   @override
   void initState() {
@@ -66,7 +68,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   InkWell(
-                    onTap: () => navbarController.changeIndex(0),
+                    onTap: () {
+                      navbarController.changeIndex(0);
+                      markerOperations.getMapCircles();
+                    },
                     borderRadius: BorderRadius.circular(16),
                     child: NavBarIcon(
                         icon: 'home',
